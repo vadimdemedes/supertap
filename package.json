@@ -1,6 +1,6 @@
 {
   "name": "supertap",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Generate TAP output",
   "license": "MIT",
   "repository": "vadimdemedes/supertap",
