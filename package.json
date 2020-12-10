@@ -10,7 +10,7 @@
     "url": "github.com/vadimdemedes"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=12"
   },
   "scripts": {
     "test": "xo && ava"
@@ -24,14 +24,14 @@
     "output"
   ],
   "dependencies": {
-    "arrify": "^1.0.1",
-    "indent-string": "^3.2.0",
-    "js-yaml": "^3.10.0",
-    "serialize-error": "^2.1.0",
-    "strip-ansi": "^4.0.0"
+    "arrify": "^2.0.1",
+    "indent-string": "^4.0.0",
+    "js-yaml": "^3.14.0",
+    "serialize-error": "^7.0.1",
+    "strip-ansi": "^6.0.0"
   },
   "devDependencies": {
-    "ava": "^0.20.0",
+    "ava": "^3.13.0",
     "ctrlc-exit": "^1.0.0",
     "execa": "^0.8.0",
     "faucet": "^0.0.1",
@@ -42,10 +42,10 @@
     "tap-nyan": "^1.1.0",
     "tap-out": "^2.0.0",
     "tap-pessimist": "^1.0.1",
-    "tap-spec": "^4.1.1",
+    "tap-spec": "^5.0.0",
     "tap-summary": "^4.0.0",
     "wait-for-enter": "^1.0.0",
-    "xo": "^0.18.2"
+    "xo": "^0.35.0"
   },
   "ava": {
     "serial": true

@@ -5,25 +5,26 @@ const indentString = require('indent-string');
 const stripAnsi = require('strip-ansi');
 const arrify = require('arrify');
 const yaml = require('js-yaml');
+const os = require('os');
 
 const serializeError = err => {
-	const obj = serializeErr(err);
-	obj.at = obj.stack
+	const object = serializeErr(err);
+	object.at = object.stack
 		.split('\n')
 		.slice(1, 2)
 		.map(line => line.replace(/at/, '').trim())
 		.shift();
 
-	delete obj.stack;
+	delete object.stack;
 
-	return obj;
+	return object;
 };
 
 exports.start = () => 'TAP version 13';
 
 exports.test = (title, options) => {
-	const error = options.error;
-	let passed = options.passed;
+	const {error} = options;
+	let {passed} = options;
 	let directive = '';
 
 	if (!error) {
@@ -37,26 +38,25 @@ exports.test = (title, options) => {
 	}
 
 	const comment = arrify(options.comment)
-		.map(line => indentString(line, 4).replace(/^ {4}/, '  * '))
-		.join('\n');
+		.map(line => indentString(line, 4).replace(/^ {4}/gm, '#   '))
+		.join(os.EOL);
 
 	const output = [
-		`# ${stripAnsi(title)}`,
-		`${passed ? 'ok' : 'not ok'} ${options.index} - ${title} ${directive}`.trim(),
+		`${passed ? 'ok' : 'not ok'} ${options.index} - ${stripAnsi(title)} ${directive}`.trim(),
 		comment
 	];
 
 	if (error) {
-		const obj = error instanceof Error ? serializeError(error) : error;
+		const object = error instanceof Error ? serializeError(error) : error;
 
 		output.push([
 			'  ---',
-			indentString(yaml.safeDump(obj).trim(), 4),
+			indentString(yaml.safeDump(object).trim(), 4),
 			'  ...'
-		].join('\n'));
+		].join(os.EOL));
 	}
 
-	return output.filter(Boolean).join('\n');
+	return output.filter(Boolean).join(os.EOL);
 };
 
 exports.finish = stats => {
@@ -73,6 +73,6 @@ exports.finish = stats => {
 		`# tests ${passed + failed + skipped}`,
 		`# pass ${passed}`,
 		skipped > 0 ? `# skip ${skipped}` : null,
-		`# fail ${failed + crashed + todo}\n`
-	].filter(Boolean).join('\n');
+		`# fail ${failed + crashed + todo}${os.EOL}`
+	].filter(Boolean).join(os.EOL);
 };

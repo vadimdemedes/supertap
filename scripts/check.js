@@ -4,21 +4,24 @@ const waitForEnter = require('wait-for-enter');
 const eachSeries = require('p-each-series');
 const ctrlcExit = require('ctrlc-exit');
 const execa = require('execa');
+const path = require('path');
 
 ctrlcExit();
 
-const exec = cmd => {
-	return execa.shell(cmd)
-		.catch(err => err)
-		.then(result => result.stdout);
+const exec = async cmd => {
+	const {stdout} = await execa.shell(cmd)
+		.catch(error => error);
+
+	return stdout;
 };
 
-const fixtures = fs.readdirSync(`${__dirname}/../test/fixtures`);
+const fixturePath = path.join(__dirname, '..', 'test', 'fixtures');
+
+const fixtures = fs.readdirSync(fixturePath);
 const reporter = process.argv[2];
 
 eachSeries(fixtures, async fixture => {
-	const fixturePath = `${__dirname}/../test/fixtures/${fixture}`;
-	const reporterPath = `${__dirname}/../node_modules/.bin/${reporter}`;
+	const reporterPath = path.join(__dirname, '..', 'node_modules', '.bin', reporter);
 	const stdout = await exec(`node ${fixturePath} | ${reporterPath}`);
 	console.log(fixture);
 	console.log(stdout);

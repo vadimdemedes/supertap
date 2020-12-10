@@ -1,11 +1,13 @@
-import fs from 'fs';
-import execa from 'execa';
-import test from 'ava';
+const fs = require('fs');
+const execa = require('execa');
+const test = require('ava');
+const path = require('path');
 
-const exec = cmd => {
-	return execa.shell(cmd)
-		.catch(err => err)
-		.then(result => result.stdout);
+const exec = async cmd => {
+	const {stdout} = await execa.shell(cmd)
+		.catch(error => error);
+
+	return stdout;
 };
 
 const reporters = [
@@ -19,19 +21,20 @@ const reporters = [
 	'tap-json'
 ];
 
-const fixtures = fs.readdirSync(`${__dirname}/fixtures`);
+const fixtures = fs.readdirSync(path.join(__dirname, 'fixtures'));
 
 reporters.forEach(reporter => {
 	fixtures.forEach(fixture => {
-		const path = `${__dirname}/fixtures/${fixture}`;
+		const fixturePath = path.join(__dirname, 'fixtures', fixture);
 		const name = fixture.replace('.js', '');
 
 		test(`${reporter} - ${name}`, async t => {
-			let stdout = await exec(`node ${path} | ${__dirname}/../node_modules/.bin/${reporter}`);
+			const reporterBinPath = path.join(__dirname, '..', 'node_modules', '.bin', reporter);
+			let stdout = await exec(`node ${fixturePath} | ${reporterBinPath}`);
 
 			// Strip duration from output, because it's dynamic and breaking snapshots
 			if (reporter === 'tap-spec' || reporter === 'tap-summary' || reporter === 'tap-min') {
-				stdout = stdout.replace(/([0-9]+)ms/g, '');
+				stdout = stdout.replace(/(\d+)ms/g, '');
 			}
 
 			t.snapshot(stdout);
