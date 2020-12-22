@@ -1,22 +1,20 @@
 'use strict';
 
-const serializeErr = require('serialize-error');
+const {serializeError} = require('serialize-error');
 const indentString = require('indent-string');
 const stripAnsi = require('strip-ansi');
 const arrify = require('arrify');
 const yaml = require('js-yaml');
 const os = require('os');
 
-const serializeError = err => {
-	const object = serializeErr(err);
+const serializeErrorForTap = err => {
+	const object = serializeError(err);
 	object.at = object.stack
 		.split('\n')
 		.slice(1, 2)
 		.map(line => line.replace(/at/, '').trim())
 		.shift();
-
 	delete object.stack;
-
 	return object;
 };
 
@@ -47,7 +45,7 @@ exports.test = (title, options) => {
 	];
 
 	if (error) {
-		const object = error instanceof Error ? serializeError(error) : error;
+		const object = error instanceof Error ? serializeErrorForTap(error) : error;
 
 		output.push([
 			'  ---',
