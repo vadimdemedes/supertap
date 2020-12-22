@@ -31,21 +31,21 @@
     "strip-ansi": "^6.0.0"
   },
   "devDependencies": {
-    "ava": "^3.13.0",
+    "ava": "^3.14.0",
     "ctrlc-exit": "^1.0.0",
-    "execa": "^0.8.0",
+    "execa": "^5.0.0",
     "faucet": "^0.0.1",
-    "p-each-series": "^1.0.0",
-    "tap-dot": "^1.0.5",
+    "p-each-series": "^2.2.0",
+    "tap-dot": "^2.0.0",
     "tap-json": "^1.0.0",
-    "tap-min": "^1.2.2",
+    "tap-min": "^2.0.0",
     "tap-nyan": "^1.1.0",
-    "tap-out": "^2.0.0",
+    "tap-out": "^3.0.0",
     "tap-pessimist": "^1.0.1",
     "tap-spec": "^5.0.0",
     "tap-summary": "^4.0.0",
     "wait-for-enter": "^1.0.0",
-    "xo": "^0.35.0"
+    "xo": "^0.36.1"
   },
   "ava": {
     "serial": true

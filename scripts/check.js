@@ -9,9 +9,7 @@ const path = require('path');
 ctrlcExit();
 
 const exec = async cmd => {
-	const {stdout} = await execa.shell(cmd)
-		.catch(error => error);
-
+	const {stdout} = await execa.command(cmd, {reject: false, shell: true})
 	return stdout;
 };
 
