@@ -4,7 +4,7 @@ const test = require('ava');
 const path = require('path');
 
 const exec = async cmd => {
-	const {stdout} = await execa.command(cmd, {reject: false, shell: true})
+	const {stdout} = await execa.command(cmd, {reject: false, shell: true});
 	return stdout;
 };
 
