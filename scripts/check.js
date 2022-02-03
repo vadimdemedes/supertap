@@ -20,7 +20,7 @@ const reporter = process.argv[2];
 
 eachSeries(fixtures, async fixture => {
 	const reporterPath = path.join(__dirname, '..', 'node_modules', '.bin', reporter);
-	const stdout = await exec(`node ${fixturePath} | ${reporterPath}`);
+	const stdout = await exec(`node ${fixturePath}/${fixture} | ${reporterPath}`);
 	console.log(fixture);
 	console.log(stdout);
 
