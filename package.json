@@ -31,9 +31,9 @@
     "strip-ansi": "^6.0.0"
   },
   "devDependencies": {
-    "ava": "^3.14.0",
+    "ava": "^4.0.1",
     "ctrlc-exit": "^1.0.0",
-    "execa": "^5.0.0",
+    "execa": "^5.1.1",
     "faucet": "^0.0.1",
     "p-each-series": "^2.2.0",
     "tap-dot": "^2.0.0",
