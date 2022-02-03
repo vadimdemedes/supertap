@@ -10,7 +10,7 @@
     "url": "github.com/vadimdemedes"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "scripts": {
     "test": "xo && ava"
