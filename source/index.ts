@@ -1,16 +1,18 @@
 import {serializeError} from 'serialize-error';
-import indentString = require('indent-string');
-import stripAnsi = require('strip-ansi');
-import * as yaml from 'js-yaml';
+import indentString from 'indent-string';
+import stripAnsi from 'strip-ansi';
+import yaml from 'js-yaml';
 
-const serializeErrorForTap = (err: Error) => {
-	const object = serializeError(err);
+const serializeErrorForTap = (error: Error) => {
+	const object = serializeError(error);
 	object['at'] = (object.stack ?? '')
 		.split('\n')
 		.slice(1, 2)
 		.map((line: string) => line.replace(/at/, '').trim())
 		.shift();
+
 	delete object.stack;
+
 	return object;
 };
 
@@ -43,24 +45,30 @@ export const test = (title: string, options: Options): string => {
 	let comment = '';
 
 	if (options.comment) {
-		comment = (Array.isArray(options.comment) ? options.comment : [options.comment])
+		const comments = Array.isArray(options.comment)
+			? options.comment
+			: [options.comment];
+
+		comment = comments
 			.map(line => indentString(line, 4).replace(/^ {4}/gm, '#   '))
 			.join('\n');
 	}
 
 	const output = [
-		`${passed ? 'ok' : 'not ok'} ${options.index} - ${stripAnsi(title)} ${directive}`.trim(),
-		comment
+		`${passed ? 'ok' : 'not ok'} ${options.index} - ${stripAnsi(
+			title,
+		)} ${directive}`.trim(),
+		comment,
 	];
 
 	if (error) {
 		const object = error instanceof Error ? serializeErrorForTap(error) : error;
 
-		output.push([
-			'  ---',
-			indentString(yaml.safeDump(object).trim(), 4),
-			'  ...'
-		].join('\n'));
+		output.push(
+			['  ---', indentString(yaml.safeDump(object).trim(), 4), '  ...'].join(
+				'\n',
+			),
+		);
 	}
 
 	return output.filter(Boolean).join('\n');
@@ -88,6 +96,8 @@ export const finish = (stats: Stats): string => {
 		`# tests ${passed + failed + skipped}`,
 		`# pass ${passed}`,
 		skipped > 0 ? `# skip ${skipped}` : null,
-		`# fail ${failed + crashed + todo}\n`
-	].filter(Boolean).join('\n');
+		`# fail ${failed + crashed + todo}\n`,
+	]
+		.filter(Boolean)
+		.join('\n');
 };

@@ -1,10 +1,6 @@
 {
-	"extends": "@sindresorhus/tsconfig",
+	"extends": "@sindresorhus/tsconfig/tsconfig.json",
 	"compilerOptions": {
-		"outDir": "dist",
-		"target": "es2018",
-		"lib": [
-			"es2018"
-		]
+		"outDir": "dist"
 	}
 }

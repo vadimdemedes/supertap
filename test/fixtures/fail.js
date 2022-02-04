@@ -1,21 +1,24 @@
-'use strict';
-const supertap = require('../..');
+import * as supertap from '../../dist/index.js';
 
 console.log(supertap.start());
 
-const err = new Error('error');
-err.stack = 'error\n  at fn (test.js:1:2)';
-err.actual = 1;
-err.expected = 2;
-err.operator = '===';
+const error = new Error('error');
+error.stack = 'error\n  at fn (test.js:1:2)';
+error.actual = 1;
+error.expected = 2;
+error.operator = '===';
 
-console.log(supertap.test('fail', {
-	index: 1,
-	passed: false,
-	error: err
-}));
+console.log(
+	supertap.test('fail', {
+		index: 1,
+		passed: false,
+		error,
+	}),
+);
 
-console.log(supertap.finish({
-	passed: 0,
-	failed: 1
-}));
+console.log(
+	supertap.finish({
+		passed: 0,
+		failed: 1,
+	}),
+);

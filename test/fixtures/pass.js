@@ -1,13 +1,16 @@
-'use strict';
-const supertap = require('../..');
+import * as supertap from '../../dist/index.js';
 
 console.log(supertap.start());
 
-console.log(supertap.test('passing', {
-	index: 1,
-	passed: true
-}));
+console.log(
+	supertap.test('passing', {
+		index: 1,
+		passed: true,
+	}),
+);
 
-console.log(supertap.finish({
-	passed: 1
-}));
+console.log(
+	supertap.finish({
+		passed: 1,
+	}),
+);
