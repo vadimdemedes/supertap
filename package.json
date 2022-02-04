@@ -15,6 +15,7 @@
 	"scripts": {
 		"build": "tsc",
 		"dev": "tsc --watch",
+		"prepare": "npm run build",
 		"pretest": "npm run build",
 		"test": "xo && ava"
 	},
